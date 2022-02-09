@@ -4,8 +4,10 @@ import { TaskList } from '../../components/TaskList';
 
 describe('App Page', () => {
   it('should be able to add a task', async () => {
+    //? Renderizar o componente numa DOM virtual
     render(<TaskList />);
 
+    //? Tipo querySelectors
     const taskInput = screen.getByPlaceholderText('Adicionar novo todo');
     const addTaskButton = screen.getByTestId('add-task-button');
 

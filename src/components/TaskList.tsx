@@ -11,19 +11,38 @@ interface Task {
 }
 
 export function TaskList() {
+  //! estado inicial = array vazio
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    if (newTaskTitle.trim() !== '') {
+      const newTask = {
+        id: Math.random(),
+        title: newTaskTitle,
+        isComplete: false
+      }
+
+      //! Sempre que eu quiser adicionar itens à listas, por ex
+      setTasks([...tasks, newTask]);
+      setNewTaskTitle('');
+    }
   }
 
   function handleToggleTaskCompletion(id: number) {
-    // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    const newTasks = tasks.map((task) => 
+      task.id === id ? { ...task, isComplete: !task.isComplete } : task);
+
+    setTasks(newTasks);
   }
 
   function handleRemoveTask(id: number) {
-    // Remova uma task da listagem pelo ID
+    //! Não posso criar/excluir itens. Posso jogar um novo estado no componente
+    //! Sempre criar um novo estado ao invés de editar um existente diretamente
+
+    //? Sempre que quiser remover itens
+    const filteredTasks = tasks.filter(task => task.id !== id);
+    setTasks(filteredTasks);
   }
 
   return (
